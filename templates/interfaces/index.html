@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content%}
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                    <h1 class="text-center mb-3">Lists</h1>
+                    {% if trials %}
+                        {% for trial in trials %}
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Case {{ trial.pk }}</h5>
+                                <p class="text-right">PD_CD: {{ trial.pd_cd }}</p>
+                                <p class="text-right">LAW_CAT_CD: {{ trial.law_cat_cd }}</p>
+                                <p class="text-right"></p>
+                                <p class="text-right"></p>
+                                <p class="text-right"></p>
+                                <p class="text-right"></p>
+                                <p class="text-right"></p>
+                                <p class="text-right"></p>
+                                <a href="{% url 'interfaces:results' trial_id=trial.id %}" class="btn btn-primary btn-sm">Results</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No clusters</p>
+                    {% endif %}
+            </div>
+            <div class="col-4">
+                <h1 class="text-center mb-3">Clustering</h1>
+                <form action="{% url 'clustering:cluster' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-check mb-4">
+                        <label for="PD_CD">PD_CD</label>
+                        <input type="text" id="PD_CD" name="PD_CD" required />
+                    </div> 
+                    <input type="submit" value="Submit" class="btn btn-success btn-lg">
+                </form>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
